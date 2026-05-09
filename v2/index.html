@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1920" />
-    <title>Track-App Promo V2 - Hyperframes</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Track-App Promo V2 - The Kept Funds Cut</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;800&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/TextPlugin.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
@@ -17,8 +17,8 @@
             colors: {
               'safety-orange': '#F97316',
               'electric-blue': '#3B82F6',
-              'paypal': '#003087',
-              'shopify': '#96bf48',
+              'paypal-blue': '#003087',
+              'pain-red': '#7f1d1d',
             },
             fontFamily: {
               heading: ['Space Grotesk', 'sans-serif'],
@@ -36,23 +36,30 @@
         background: #000;
         font-family: 'Lexend', sans-serif;
       }
-      .clip { position: absolute; inset: 0; overflow: hidden; }
+      .clip { position: absolute; inset: 0; overflow: hidden; display: none; }
+      .clip.active { display: block; }
       
       .tiktok-text {
-        font-size: 120px; font-weight: 900; font-family: 'Space Grotesk';
-        color: white; text-transform: uppercase; line-height: 1.1;
+        font-size: 130px; font-weight: 900; font-family: 'Space Grotesk';
+        color: white; text-transform: uppercase; line-height: 0.9;
         text-align: center; text-shadow: 0 20px 50px rgba(0,0,0,0.9);
         position: absolute; z-index: 100; width: 100%; padding: 0 40px;
       }
-      .highlight-bg { background: #F97316; padding: 10px 40px; border-radius: 30px; display: inline-block; transform: rotate(-2deg); }
-      .glass-card {
-        background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px);
-        border: 4px solid rgba(255,255,255,0.8); border-radius: 60px;
-        box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+      .highlight-orange { background: #F97316; padding: 5px 30px; border-radius: 20px; }
+      
+      .glass-ui {
+        background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(25px);
+        border: 4px solid white; border-radius: 60px;
+        box-shadow: 0 50px 100px rgba(0,0,0,0.2);
       }
-      .custom-marker { background: #3B82F6; border: 4px solid white; border-radius: 50%; box-shadow: 0 0 15px rgba(59,130,246,0.5); }
-      .dest-marker { background: #F97316; border: 4px solid white; border-radius: 50%; box-shadow: 0 0 20px rgba(249,115,22,0.8); }
-      .map-overlay { position: absolute; inset: 0; background: rgba(241, 245, 249, 0.5); pointer-events: none; z-index: 10; }
+
+      /* Custom Leaflet overrides */
+      .custom-marker { background: #3B82F6; border: 4px solid white; border-radius: 50%; box-shadow: 0 0 30px rgba(59,130,246,0.8); }
+      .dest-marker { background: #F97316; border: 4px solid white; border-radius: 50%; box-shadow: 0 0 40px rgba(249,115,22,1); }
+      .map-dim { position: absolute; inset: 0; background: rgba(255,255,255,0.4); pointer-events: none; z-index: 5; }
+
+      /* Audio Cues Visualizer (Hidden) */
+      .audio-cue { display: none; }
     </style>
   </head>
   <body>
@@ -64,205 +71,208 @@
       data-width="1080"
       data-height="1920"
     >
-      <!-- Background grid -->
-      <div class="absolute inset-0 bg-slate-900 opacity-5" style="background-image: radial-gradient(#fff 2px, transparent 2px); background-size: 40px 40px;"></div>
+      <!-- SCENE 1: THE PAIN (0.0 - 3.5s) -->
+      <div class="clip active z-10 bg-pain-red" id="s1" data-start="0" data-duration="3.5">
+        <div class="absolute inset-0 opacity-30" style="background-image: repeating-linear-gradient(45deg, #000, #000 10px, transparent 10px, transparent 20px);"></div>
+        
+        <div class="tiktok-text top-[15%] scale-110" id="s1-text">
+          DROPSHIPPING<br>IS <span class="text-red-500 drop-shadow-[0_0_50px_rgba(239,68,68,1)]">DEAD?</span>
+        </div>
 
-      <!-- SCENE 1: THE PAIN (0 - 4s) -->
-      <div class="clip z-10" id="s1" data-start="0" data-duration="4" data-track-index="1">
-        <div class="absolute inset-0 bg-red-900/40"></div>
-        <div class="tiktok-text top-[10%]" id="t-dead">
-          DROPSHIPPING IS<br><span class="text-red-500 text-[160px] drop-shadow-[0_0_40px_rgba(239,68,68,1)]">DEAD?</span>
-        </div>
-        <div class="absolute top-[35%] w-full h-[600px] flex items-center justify-center">
-          <div class="absolute w-[90%] mb-[380px] bg-white rounded-[50px] p-12 border-8 border-red-500 z-30 shadow-[0_30px_100px_rgba(220,38,38,0.8)]" id="pop-paypal">
-            <div class="flex items-center justify-between mb-8">
-              <div class="text-paypal font-black italic text-7xl">PayPal</div>
-              <div class="text-red-600 font-bold text-4xl px-6 py-3 bg-red-50 rounded-full">ALERT</div>
+        <div class="absolute inset-0 flex items-center justify-center p-10">
+          <div class="w-full bg-white rounded-[60px] p-16 border-[12px] border-red-600 shadow-[0_0_150px_rgba(220,38,38,0.6)]" id="paypal-alert">
+            <div class="flex justify-between items-center mb-10">
+              <span class="text-paypal-blue font-black italic text-8xl">PayPal</span>
+              <span class="bg-red-600 text-white px-8 py-3 rounded-full text-4xl font-bold">HOLD</span>
             </div>
-            <h2 class="text-[80px] font-black text-slate-900 leading-none mb-4">FUNDS ON HOLD</h2>
-            <p class="text-[100px] font-bold text-red-600 leading-none">-$4,500.00</p>
-          </div>
-          <div class="absolute w-[95%] bg-white rounded-[50px] p-12 z-40 shadow-[0_30px_100px_rgba(0,0,0,0.8)] border-4 border-slate-200 mt-[350px]" id="pop-shop" style="transform: rotate(3deg);">
-            <div class="flex items-center gap-6 mb-6">
-              <div class="w-16 h-16 bg-shopify rounded-full"></div>
-              <span class="text-5xl font-bold text-slate-500">Shopify Payments</span>
-            </div>
-            <h2 class="text-[80px] font-black text-slate-900 leading-none">Chargeback Initiated</h2>
-            <p class="text-5xl text-slate-600 mt-4 font-bold text-red-500">Item not received.</p>
+            <div class="text-slate-400 text-4xl font-bold mb-4 uppercase tracking-tighter">Notification</div>
+            <div class="text-slate-900 text-[90px] font-black leading-none mb-6">FUNDS ON HOLD</div>
+            <div class="text-red-600 text-[130px] font-black leading-none">-$4,500.00</div>
           </div>
         </div>
+
+        <!-- Audio Cue: Riser + Impact -->
+        <div class="audio-cue" data-time="0.0" data-label="riser"></div>
+        <div class="audio-cue" data-time="1.0" data-label="impact-alert"></div>
       </div>
 
-      <!-- SCENE 1.5: THE BORING TRACKING (Overlaying S1 at 2.5s) -->
-      <div class="clip z-50 bg-white" id="s1-boring" data-start="2.5" data-duration="1.5" data-track-index="5">
-        <div class="flex flex-col justify-center h-full px-10">
-          <h2 class="text-[80px] font-black text-slate-900 mb-12 text-center">Standard Tracking</h2>
-          <div class="w-full bg-slate-50 p-16 rounded-[60px] border-4 border-slate-200">
-            <div class="flex flex-col gap-12">
-              <div class="flex gap-8 text-5xl text-slate-500">
-                <span class="font-bold whitespace-nowrap">Oct 12</span>
-                <span class="font-bold text-slate-800">[CHINA] Package handed to airline.</span>
-              </div>
-              <div class="flex gap-8 text-5xl text-slate-400">
-                <span class="font-bold whitespace-nowrap">Oct 11</span>
-                <span>[CHINA] Arrived at sorting center.</span>
-              </div>
-            </div>
-            <div class="mt-24 bg-red-50 text-red-600 p-12 rounded-3xl text-[70px] font-black text-center border-4 border-red-200 uppercase">
-              No updates for 14 days
-            </div>
-          </div>
-          <div class="tiktok-text top-[75%] text-[90px] !relative mt-20">
-            <span class="bg-red-600 px-10 py-4 rounded-[40px] text-white inline-block mb-6">Customers refund</span><br>
-            <span class="text-slate-900">when tracking freezes.</span>
-          </div>
+      <!-- SCENE 2: THE SECRET (3.5 - 7.5s) -->
+      <div class="clip z-20 bg-slate-100" id="s2" data-start="3.5" data-duration="4.0">
+        <div class="tiktok-text top-[12%] text-slate-900 text-[100px]" id="s2-text">
+          THE SECRET:<br><span class="highlight-orange text-white">GENERATE MOVEMENT.</span>
         </div>
-      </div>
 
-      <!-- SCENE 2: The Secret Weapon (4 - 8s) -->
-      <div class="clip z-10 bg-slate-100" id="s2" data-start="4" data-duration="4" data-track-index="1">
-        <div class="tiktok-text top-[15%] text-slate-900" id="t-secret">
-          The Secret:<br><span class="highlight-bg text-white mt-4">Generate Movement.</span>
-        </div>
-        <div class="flex-1 flex flex-col items-center justify-center w-full h-full px-10">
-          <div class="glass-card w-[95%] p-16 mt-[450px]" id="s2-card">
+        <div class="absolute inset-0 flex items-center justify-center p-10 pt-40" id="s2-ui-container">
+          <div class="glass-ui w-full p-16" id="admin-card">
             <div class="flex items-center gap-8 mb-16">
-              <div class="w-28 h-28 bg-safety-orange rounded-3xl flex items-center justify-center shadow-lg shadow-orange-500/50">
-                <svg class="w-16 h-16 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+              <div class="w-32 h-32 bg-safety-orange rounded-[40px] flex items-center justify-center shadow-2xl">
+                <svg class="w-20 h-20 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4"><path d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
               </div>
-              <h2 class="text-[80px] font-black font-heading text-slate-900 leading-none">Track-App Admin</h2>
-            </div>
-            <div class="bg-slate-50 border-4 border-slate-200 rounded-[40px] p-12 mb-12">
-              <label class="block text-4xl font-bold text-slate-500 uppercase tracking-widest mb-6">Route Simulation</label>
-              <div class="flex justify-between items-center bg-white border-4 border-slate-200 p-10 rounded-3xl text-5xl font-black text-slate-900">
-                <span>Origin: China</span>
-                <span class="text-electric-blue">Dest: Frankfurt</span>
+              <div class="flex flex-col">
+                <span class="text-slate-900 font-black text-7xl font-heading">Track-App</span>
+                <span class="text-slate-500 font-bold text-3xl uppercase tracking-widest">Global Admin V4</span>
               </div>
             </div>
-            <div id="btn-generate" class="w-full bg-safety-orange text-white text-[70px] font-black font-heading uppercase tracking-wider py-12 rounded-[40px] text-center">
-              GENERATE
+
+            <div class="space-y-8">
+              <div class="bg-white/50 border-4 border-white p-10 rounded-[40px]">
+                <div class="text-slate-400 font-bold text-3xl uppercase mb-4">Active Route</div>
+                <div class="flex justify-between items-center text-5xl font-black text-slate-900">
+                  <span>Shenzhen, CN</span>
+                  <svg class="w-12 h-12 text-safety-orange" fill="currentColor" viewBox="0 0 20 20"><path d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" /></svg>
+                  <span>London, UK</span>
+                </div>
+              </div>
+
+              <div id="btn-generate" class="w-full bg-safety-orange text-white text-[80px] font-black py-14 rounded-[40px] text-center shadow-[0_20px_60px_rgba(249,115,22,0.4)] cursor-pointer">
+                GENERATE
+              </div>
             </div>
           </div>
         </div>
+
+        <!-- Audio Cue: Whoosh + Click -->
+        <div class="audio-cue" data-time="3.5" data-label="whoosh-clean"></div>
+        <div class="audio-cue" data-time="6.0" data-label="mechanical-click"></div>
       </div>
 
-      <!-- SCENE 3: The Magic (8 - 13s) -->
-      <div class="clip z-10 bg-slate-100" id="s3" data-start="8" data-duration="5" data-track-index="1">
-        <div id="map" class="absolute inset-0 z-0 h-[1100px] border-b-4 border-slate-300"></div>
-        <div class="map-overlay"></div>
-        <div class="tiktok-text top-[5%] text-slate-900 z-50 drop-shadow-2xl" id="t-magic">
-          They stay calm.<br><span class="highlight-bg text-white mt-4">You keep the money.</span>
+      <!-- SCENE 3: THE MAGIC (7.5 - 12.5s) -->
+      <div class="clip z-30 bg-white" id="s3" data-start="7.5" data-duration="5.0">
+        <div id="map" class="absolute inset-0 z-0 opacity-0"></div>
+        <div class="map-dim"></div>
+
+        <div class="tiktok-text top-[8%] text-slate-900 text-[90px]" id="s3-text">
+          PAYPAL LOVES<br><span class="highlight-orange text-white">ACTIVE TRACKING.</span>
         </div>
-        <div class="absolute bottom-10 w-full px-10 z-20">
-          <div class="glass-card w-full p-16 bg-white" id="hero-card">
-            <div class="flex justify-between items-center mb-16">
-              <div class="flex-1 pr-8">
-                <div class="text-4xl text-slate-500 font-bold font-mono mb-4">TID-US8199</div>
-                <h1 id="live-status" class="text-[70px] font-black font-heading text-slate-900 leading-tight">Pending</h1>
+
+        <div class="absolute bottom-16 w-full px-10">
+          <div class="glass-ui w-full p-16" id="status-card">
+            <div class="flex justify-between items-center mb-12">
+              <div>
+                <div class="text-slate-400 font-bold text-3xl mb-2 uppercase">Tracking ID</div>
+                <div class="text-slate-900 font-black text-6xl">VNT-99120-UK</div>
               </div>
-              <div class="text-right bg-blue-50 p-8 rounded-[40px] border-4 border-blue-100 max-w-[400px]" id="est-box">
-                <div class="text-2xl font-extrabold uppercase text-electric-blue mb-2">Estimated Delivery</div>
-                <div class="text-5xl font-black text-slate-900">Arriving Tomorrow</div>
+              <div class="bg-orange-100 px-8 py-4 rounded-3xl border-4 border-orange-200">
+                <div id="live-status" class="text-safety-orange font-black text-5xl">PROCESSING</div>
               </div>
             </div>
-            <div class="relative mt-[120px] px-6">
-              <div class="absolute top-8 left-0 right-0 h-6 bg-slate-200 rounded-full">
-                <div id="progress-fill" class="h-full w-0 bg-safety-orange rounded-full shadow-[0_0_30px_rgba(249,115,22,0.6)]"></div>
-              </div>
-              <div class="flex justify-between relative z-10">
-                <div class="w-20 h-20 rounded-full bg-safety-orange border-[8px] border-safety-orange flex items-center justify-center text-white"><svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-                <div id="node2" class="w-20 h-20 rounded-full bg-white border-[8px] border-slate-300"></div>
-                <div id="node3" class="w-20 h-20 rounded-full bg-white border-[8px] border-slate-300"></div>
-                <div id="node4" class="w-20 h-20 rounded-full bg-white border-[8px] border-slate-300"></div>
-              </div>
+
+            <div class="relative h-8 bg-slate-100 rounded-full overflow-hidden border-4 border-white mb-8">
+              <div id="progress-bar" class="absolute inset-y-0 left-0 bg-safety-orange w-0"></div>
+            </div>
+            
+            <div class="flex justify-between text-slate-400 font-bold text-3xl uppercase tracking-widest">
+              <span>Origin</span>
+              <span id="kept-funds-callout" class="text-slate-900">Kept Funds</span>
+              <span>Delivered</span>
             </div>
           </div>
         </div>
+
+        <!-- Audio Cue: Data Processing -->
+        <div class="audio-cue" data-time="8.5" data-label="data-processing"></div>
       </div>
 
-      <!-- SCENE 4: Outro (13 - 15s) -->
-      <div class="clip z-10" id="s4" data-start="13" data-duration="2" data-track-index="1">
-        <div class="absolute inset-0 bg-slate-900"></div>
-        <div class="flex-1 flex flex-col items-center justify-center w-full h-full p-20 text-center z-10">
-          <div id="logo-final" class="w-[400px] h-[400px] bg-safety-orange rounded-[100px] flex items-center justify-center mb-20 shadow-[0_50px_150px_rgba(249,115,22,0.5)]">
-            <svg class="w-[200px] h-[200px] text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+      <!-- SCENE 4: FINALE (12.5 - 15.0s) -->
+      <div class="clip z-40 bg-slate-900" id="s4" data-start="12.5" data-duration="2.5">
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#fff 2px, transparent 2px); background-size: 60px 60px;"></div>
+        
+        <div class="flex flex-col items-center justify-center h-full text-center px-10">
+          <div id="final-logo" class="w-48 h-48 bg-safety-orange rounded-[50px] mb-12 flex items-center justify-center shadow-[0_0_100px_rgba(249,115,22,0.4)]">
+            <svg class="w-32 h-32 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4"><path d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
           </div>
-          <h1 id="final-title" class="text-[180px] font-black font-heading text-white leading-none tracking-tighter mb-10">Track-App</h1>
-          <p id="final-desc" class="text-[70px] font-bold text-electric-blue uppercase tracking-widest mt-10 leading-relaxed text-center">
-            The Dropshipper's<br><span class="text-white">Cheat Code.</span>
+          
+          <h1 id="final-title" class="text-white text-[180px] font-black font-heading leading-none mb-6">Track-App.</h1>
+          <p id="final-desc" class="text-electric-blue text-7xl font-bold uppercase tracking-widest leading-tight">
+            The Dropshipper's<br><span class="text-white underline decoration-safety-orange">Cheat Code.</span>
           </p>
         </div>
+
+        <!-- Audio Cue: Cha-ching -->
+        <div class="audio-cue" data-time="13.0" data-label="cha-ching"></div>
       </div>
     </div>
 
     <script>
       window.__timelines = window.__timelines || {};
       gsap.registerPlugin(TextPlugin);
-      
-      const tl = gsap.timeline({ paused: true });
 
-      // Map Initialization
-      let map, marker, routeLine;
+      const mainTl = gsap.timeline({ paused: true });
+
+      // --- Map Engine ---
+      let map, marker, route;
       function initMap() {
+        if (map) return;
         map = L.map('map', { zoomControl: false, attributionControl: false }).setView([22.5431, 114.0579], 3);
         L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png').addTo(map);
+        
         const origin = [22.5431, 114.0579];
-        const dest = [50.1109, 8.6821];
+        const dest = [51.5074, -0.1278];
+        
         L.marker(dest, { icon: L.divIcon({ className: 'dest-marker', iconSize: [40, 40] }) }).addTo(map);
         marker = L.marker(origin, { icon: L.divIcon({ className: 'custom-marker', iconSize: [30, 30] }) }).addTo(map);
-        routeLine = L.polyline([origin, origin], { color: '#F97316', weight: 8, dashArray: '15, 15', lineCap: 'round' }).addTo(map);
+        route = L.polyline([origin, origin], { color: '#F97316', weight: 10, lineCap: 'round', dashArray: '20, 20' }).addTo(map);
       }
 
-      // Initial state
-      gsap.set(['#pop-paypal', '#pop-shop'], { scale: 0.5, opacity: 0 });
+      // --- Animation Orchestration ---
 
-      // SCENE 1 (0-4s)
-      tl.from('#t-dead', { scale: 1.5, opacity: 0, duration: 0.4, ease: 'back.out(2)' }, 0.1);
-      tl.to('#pop-paypal', { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(2)' }, 0.8);
-      tl.to('#pop-shop', { scale: 1, rotation: 3, opacity: 1, duration: 0.3, ease: 'back.out(2)' }, 1.2);
-      
-      // SCENE 1.5 (2.5s)
-      tl.from('#s1-boring', { opacity: 0, duration: 0.3 }, 2.5);
+      // SCENE 1: PAIN (0.0 - 3.5)
+      mainTl.call(() => { document.querySelectorAll('.clip').forEach(c => c.classList.remove('active')); document.getElementById('s1').classList.add('active'); }, null, 0);
+      mainTl.from('#s1-text', { scale: 2, opacity: 0, duration: 0.5, ease: 'expo.out' }, 0.2);
+      mainTl.from('#paypal-alert', { y: 1000, rotation: 10, duration: 0.6, ease: 'back.out(1.2)' }, 1.0);
+      mainTl.to('#s1-text', { scale: 0.9, duration: 2.0, ease: 'none' }, 1.0);
 
-      // SCENE 2 (4-8s)
-      tl.from('#t-secret', { y: -100, opacity: 0, duration: 0.5, ease: 'back.out' }, 4.1);
-      tl.from('#s2-card', { y: 200, opacity: 0, duration: 0.6, ease: 'power3.out' }, 4.3);
-      tl.to('#btn-generate', { scale: 0.95, backgroundColor: '#ea580c', duration: 0.1, yoyo: true, repeat: 1 }, 5.5);
+      // SCENE 2: SECRET (3.5 - 7.5)
+      mainTl.call(() => { document.querySelectorAll('.clip').forEach(c => c.classList.remove('active')); document.getElementById('s2').classList.add('active'); }, null, 3.5);
+      mainTl.from('#s2-text', { x: -1000, duration: 0.6, ease: 'power4.out' }, 3.7);
+      mainTl.from('#admin-card', { y: 1500, duration: 0.8, ease: 'power3.out' }, 4.0);
+      
+      // Sim-Click
+      mainTl.to('#btn-generate', { scale: 0.9, duration: 0.1 }, 6.0);
+      mainTl.to('#btn-generate', { scale: 1, duration: 0.2, backgroundColor: '#3B82F6', text: 'GENERATING...' }, 6.1);
 
-      // SCENE 3 (8-13s)
-      tl.call(() => { if(!map) initMap(); else map.invalidateSize(); }, null, 8);
-      tl.from('#t-magic', { y: -100, opacity: 0, duration: 0.5, ease: 'back.out' }, 8.1);
-      tl.from('#hero-card', { y: 300, opacity: 0, duration: 0.5, ease: 'power3.out' }, 8.3);
-      tl.to('#live-status', { text: "Out for Delivery", color: "#F97316", duration: 0.6, ease: 'none' }, 9.0);
-      tl.to('#est-box', { scale: 1.05, backgroundColor: "#e0f2fe", borderColor: "#bae6fd", duration: 0.5, ease: 'back.out(2)' }, 9.0);
+      // --- TRANSITION: SPEED RAMP (7.5 - 8.0) ---
+      mainTl.to('#s2-ui-container', { scale: 8, opacity: 0, duration: 0.5, ease: 'power4.in' }, 7.5);
+      mainTl.to('#s2-text', { opacity: 0, scale: 0.5, duration: 0.3 }, 7.5);
+
+      // SCENE 3: MAGIC (7.5 - 12.5)
+      mainTl.call(() => { 
+        document.querySelectorAll('.clip').forEach(c => c.classList.remove('active')); 
+        document.getElementById('s3').classList.add('active');
+        initMap();
+      }, null, 7.5);
       
-      tl.to('#progress-fill', { width: "100%", duration: 1.5, ease: 'power2.inOut' }, 9.5);
-      tl.to('#node2', { backgroundColor: "#F97316", borderColor: "#F97316", duration: 0.2 }, 9.9);
-      tl.to('#node3', { backgroundColor: "#F97316", borderColor: "#F97316", duration: 0.2 }, 10.4);
-      tl.to('#node4', { backgroundColor: "#F97316", borderColor: "#F97316", boxShadow: "0 0 30px rgba(249,115,22,0.6)", duration: 0.2 }, 10.9);
-      
-      // Map Animation
-      tl.to({}, { 
-        duration: 2.5, 
+      mainTl.to('#map', { opacity: 1, duration: 0.5 }, 8.0);
+      mainTl.from('#s3-text', { scale: 0, opacity: 0, duration: 0.6, ease: 'back.out' }, 8.2);
+      mainTl.from('#status-card', { y: 500, duration: 0.6, ease: 'power3.out' }, 8.5);
+
+      // Progress & Map Sync
+      mainTl.to('#progress-bar', { width: '100%', duration: 3.5, ease: 'none' }, 8.5);
+      mainTl.to('#live-status', { text: 'OUT FOR DELIVERY', duration: 0.1 }, 10.5);
+      mainTl.to('#kept-funds-callout', { color: '#F97316', scale: 1.2, duration: 0.3, yoyo: true, repeat: 1 }, 10.5);
+
+      mainTl.to({}, { 
+        duration: 3.5, 
         onUpdate: function() {
           if(!marker) return;
-          const p = (this.time() - 9.5) / 2.5;
+          const p = (this.time() - 8.5) / 3.5;
           if (p < 0 || p > 1) return;
-          const startLat = 22.5431, startLng = 114.0579, endLat = 50.1109, endLng = 8.6821;
-          const lat = startLat + (endLat - startLat) * p;
-          const lng = startLng + (endLng - startLng) * p;
+          const start = [22.5431, 114.0579], end = [51.5074, -0.1278];
+          const lat = start[0] + (end[0] - start[0]) * p;
+          const lng = start[1] + (end[1] - start[1]) * p;
           marker.setLatLng([lat, lng]);
-          routeLine.setLatLngs([[startLat, startLng], [lat, lng]]);
-          if (p > 0.1) map.panTo([lat, lng], { animate: false });
+          route.setLatLngs([start, [lat, lng]]);
+          map.panTo([lat, lng], { animate: false });
         }
-      }, 9.5);
+      }, 8.5);
 
-      // SCENE 4 (13-15s)
-      tl.from('#logo-final', { scale: 0, rotation: -90, duration: 0.8, ease: 'back.out(2)' }, 13.1);
-      tl.from('#final-title', { opacity: 0, y: 80, duration: 0.5 }, 13.5);
-      tl.from('#final-desc', { opacity: 0, y: 50, duration: 0.5 }, 13.8);
+      // SCENE 4: FINALE (12.5 - 15.0)
+      mainTl.call(() => { document.querySelectorAll('.clip').forEach(c => c.classList.remove('active')); document.getElementById('s4').classList.add('active'); }, null, 12.5);
+      mainTl.from('#final-logo', { scale: 0, rotation: 180, duration: 0.8, ease: 'back.out' }, 12.7);
+      mainTl.from('#final-title', { opacity: 0, y: 50, duration: 0.5 }, 13.0);
+      mainTl.from('#final-desc', { opacity: 0, y: 50, duration: 0.5 }, 13.3);
 
-      window.__timelines["main"] = tl;
+      window.__timelines["main"] = mainTl;
     </script>
   </body>
 </html>
