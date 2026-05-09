@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track-App Promo - Final Master</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        :root {
+            --color-safety-orange: #ff6b00;
+            --color-slate-900: #0f172a;
+            --color-slate-600: #475569;
+            --color-slate-400: #94a3b8;
+            --color-slate-100: #f1f5f9;
+            --bg-grid: radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
+            --bg-red: radial-gradient(circle at center, #9e0000 0%, #4a0000 100%);
+        }
+
+        body {
+            margin: 0; padding: 0; background: #000;
+            font-family: 'Inter', sans-serif; overflow: hidden;
+            display: flex; justify-content: center; align-items: center; height: 100vh;
+        }
+
+        .preview-wrapper {
+            height: 95vh; aspect-ratio: 9 / 16; position: relative;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+            border-radius: 24px; overflow: hidden; background: #fff;
+        }
+
+        [data-composition-id] {
+            position: absolute; top: 0; left: 50%; width: 1080px; height: 1920px;
+            background: #fff; transform-origin: top center; transform: translateX(-50%) scale(1);
+        }
+
+        .scene { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; display: none; }
+        .scene.active { display: block; }
+
+        /* Scene 1: Pain */
+        #scene-1 { background: var(--bg-red); opacity: 1; display: block; }
+        .notification {
+            position: absolute; width: 900px; left: 90px;
+            background: rgba(255,255,255,0.12); backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255,255,255,0.25); border-radius: 44px;
+            padding: 45px 55px; display: flex; align-items: center; gap: 35px; opacity: 0;
+            box-sizing: border-box; box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        }
+        .notif-icon-box {
+            width: 120px; height: 120px; border-radius: 32px;
+            background: linear-gradient(135deg, #ff5f6d 0%, #ffc371 100%);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .hook-text { 
+            position: absolute; top: 75%; left: 0; width: 100%; text-align: center; opacity: 0;
+            font-weight: 900; font-size: 140px; color: #fff; line-height: 0.85; text-transform: uppercase;
+        }
+
+        /* Scene 2: Transition / Logo */
+        #scene-2 { background: #fff; display: none; flex-direction: column; justify-content: center; align-items: center; }
+        .logo-box { width: 340px; height: 340px; background: #fff; border-radius: 70px; display: flex; align-items: center; justify-content: center; box-shadow: 0 40px 80px rgba(0,0,0,0.08); border: 1px solid #eee; }
+        .logo-box svg { width: 200px; height: 200px; fill: var(--color-safety-orange); }
+
+        /* Scene 3: ADMIN FORM */
+        #scene-admin { 
+            background-color: #f8fafc; background-image: var(--bg-grid); background-size: 44px 44px;
+            padding: 80px 50px; box-sizing: border-box; 
+        }
+        .admin-card { background: white; border-radius: 54px; padding: 75px; box-shadow: 0 30px 80px rgba(0,0,0,0.06); width: 100%; box-sizing: border-box; }
+        .form-h { font-size: 68px; font-weight: 800; color: var(--color-slate-900); margin-bottom: 70px; }
+        .section-h { font-size: 34px; font-weight: 700; color: var(--color-slate-900); border-bottom: 2px solid var(--color-slate-100); padding-bottom: 18px; margin-bottom: 35px; }
+        .input-fake {
+            width: 100%; padding: 35px; background: #fff; border: 3.5px solid var(--color-slate-100);
+            border-radius: 20px; font-size: 40px; color: var(--color-slate-900); box-sizing: border-box;
+            display: flex; align-items: center; height: 130px; margin-bottom: 40px; position: relative;
+        }
+        .map-box { width: 100%; height: 420px; background: #f1f5f9; border-radius: 30px; margin: 25px 0 50px; position: relative; border: 1.5px solid #e2e8f0; overflow: hidden; }
+        .map-marker { width: 36px; height: 36px; background: #3b82f6; border: 5px solid white; border-radius: 50%; position: absolute; box-shadow: 0 8px 20px rgba(59, 130, 246, 0.5); z-index: 10; }
+        .btn-orange { background: var(--color-safety-orange); color: white; padding: 45px; border-radius: 24px; font-weight: 800; font-size: 44px; text-align: center; box-shadow: 0 25px 50px rgba(255, 107, 0, 0.35); }
+        .cursor-line { width: 5px; height: 60px; background: var(--color-safety-orange); margin-left: 8px; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Scene 4: CUSTOMER VIEW */
+        #scene-customer { 
+            background: #fff; background-image: var(--bg-grid); background-size: 35px 35px;
+            padding: 50px; box-sizing: border-box; 
+        }
+        .cust-card { background: white; border-radius: 50px; padding: 65px; border: 1px solid #eee; margin-bottom: 40px; box-shadow: 0 10px 40px rgba(0,0,0,0.02); }
+        .timeline-line { display: flex; justify-content: space-between; align-items: center; padding: 60px 0; position: relative; }
+        .timeline-line::after { content: ''; position: absolute; top: 50%; left: 0; width: 100%; height: 8px; background: #f1f5f9; z-index: 1; transform: translateY(-50%); }
+        .t-dot { width: 45px; height: 45px; border-radius: 50%; background: #f1f5f9; z-index: 2; border: 7px solid white; }
+        .t-dot.on { background: var(--color-safety-orange); }
+        .info-pill { background: #f8fafc; border: 2px solid #f1f5f9; padding: 40px; border-radius: 30px; display: flex; align-items: center; gap: 30px; margin-bottom: 25px; }
+        .status-pill-big { background: #dcfce7; color: #166534; padding: 18px 45px; border-radius: 100px; font-size: 38px; font-weight: 800; display: inline-block; margin-top: 25px; }
+    </style>
+</head>
+<body>
+
+    <div class="preview-wrapper">
+        <div data-composition-id="track-app-promo">
+            
+            <!-- Scene 1 -->
+            <div id="scene-1" class="scene active">
+                <div id="notes-list"></div>
+                <div id="hook-title" class="hook-text">STOP<br>DISPUTES</div>
+            </div>
+
+            <!-- Scene 2 -->
+            <div id="scene-2" class="scene" style="display:none;">
+                <div class="logo-box">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <div style="font-size: 100px; font-weight: 950; color: var(--color-slate-900); margin-top: 60px; letter-spacing: -4px;">TRACK-APP</div>
+            </div>
+
+            <!-- Scene 3 -->
+            <div id="scene-admin" class="scene" style="display:none;">
+                <div class="admin-card">
+                    <div class="form-h">Create Shipment</div>
+                    <div class="section-h">Basic Information</div>
+                    <div class="input-fake"><span id="txt-tn"></span><div class="cursor-line" id="cur-1"></div></div>
+                    <div class="input-fake" style="display: flex; justify-content: space-between;">
+                        <span id="txt-st">Pending</span>
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4"><path d="M6 9l6 6 6-6"/></svg>
+                    </div>
+                    <div class="section-h">Route Map</div>
+                    <div class="map-box">
+                        <div class="map-marker" id="mark-origin" style="top:30%; left:20%; opacity:0;"></div>
+                        <div class="map-marker" id="mark-dest" style="top:70%; left:80%; opacity:0; background:var(--color-safety-orange);"></div>
+                    </div>
+                    <div class="btn-orange" id="btn-save">Create Shipment & Initialize</div>
+                </div>
+            </div>
+
+            <!-- Scene 4 -->
+            <div id="scene-customer" class="scene" style="display:none;">
+                <div class="cust-card">
+                    <div style="color:var(--color-slate-400); font-size:36px; font-weight:700; margin-bottom:25px; font-family:monospace;">TID81989044</div>
+                    <div style="font-size:75px; font-weight:900; color:var(--color-slate-900);" id="final-st">In Transit</div>
+                    <div class="status-pill-big" id="pill-del" style="display:none;">DELIVERED</div>
+                    <div class="timeline-line">
+                        <div class="t-dot on"></div><div class="t-dot on"></div><div class="t-dot on"></div>
+                        <div class="t-dot" id="dot-4"></div><div class="t-dot" id="dot-5"></div>
+                    </div>
+                </div>
+                <div class="info-pill" style="border-left: 10px solid var(--color-safety-orange);">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M9 20l-5-5 5-5m5 10l5-5-5-5"/></svg>
+                    <div>
+                        <div style="font-size:26px; color:var(--color-slate-400); font-weight:700;">ROUTE</div>
+                        <div style="font-size:38px; color:var(--color-slate-900); font-weight:800;">Birmingham → Paris</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const tl = gsap.timeline({ paused: true });
+
+        // Scene 1: Pain
+        const painData = [
+            { t: "Shopify", m: "Customer #1029: Dispute" },
+            { t: "PayPal", m: "Chargeback: $149.00" },
+            { t: "Warning", m: "High Fraud Risk detected" }
+        ];
+        painData.forEach((n, i) => {
+            const el = document.createElement('div');
+            el.className = 'notification'; el.style.top = `${320 + (i * 300)}px`;
+            el.innerHTML = `<div class="notif-icon-box"><svg viewBox="0 0 24 24" style="width:70px;height:70px;fill:white;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div>
+                            <div><div style="font-weight:900;font-size:46px;color:#fff;margin-bottom:10px;">${n.t}</div><div style="font-size:38px;color:rgba(255,255,255,0.8);">${n.m}</div></div>`;
+            document.getElementById('notes-list').appendChild(el);
+            tl.fromTo(el, { opacity: 0, x: -100, scale: 0.9 }, { opacity: 1, x: 0, scale: 1, duration: 0.6, ease: "back.out(1.5)" }, 0.2 + (i * 0.4));
+        });
+        tl.to("#hook-title", { opacity: 1, y: -30, duration: 0.8 }, 1.5);
+
+        // Scene 2: Transition
+        tl.to("#scene-1", { opacity: 0, scale: 1.2, duration: 0.6 }, 4.0);
+        tl.set("#scene-2", { display: "flex", opacity: 0 }, 4.0);
+        tl.to("#scene-2", { opacity: 1, duration: 0.5 }, 4.0);
+        tl.from(".logo-box", { scale: 0, rotation: -15, duration: 0.9, ease: "back.out(1.7)" }, 4.3);
+
+        // Scene 3: Admin
+        tl.to("#scene-2", { opacity: 0, y: -100, duration: 0.5 }, 6.5);
+        tl.set("#scene-admin", { display: "block", opacity: 0 }, 6.5);
+        tl.to("#scene-admin", { opacity: 1, duration: 0.5 }, 6.5);
+
+        // Interaction
+        const tn = "YT81989044";
+        tn.split('').forEach((char, i) => {
+            tl.to("#txt-tn", { textContent: tn.substring(0, i+1), duration: 0.06 }, 7.2 + (i * 0.07));
+        });
+        tl.to("#mark-origin", { opacity: 1, scale: 1.5, duration: 0.4, ease: "back.out" }, 8.2);
+        tl.to("#mark-origin", { scale: 1, duration: 0.2 }, 8.6);
+        
+        tl.to("#status-val", { textContent: "Delivered", color: "#166534", duration: 0.3 }, 9.5);
+        tl.to("#mark-dest", { opacity: 1, scale: 1.5, duration: 0.4, ease: "back.out" }, 10.0);
+        tl.to("#mark-dest", { scale: 1, duration: 0.2 }, 10.4);
+        
+        tl.to("#btn-save", { scale: 0.95, backgroundColor: "#e65a00", duration: 0.1 }, 11.5);
+        tl.to("#btn-save", { scale: 1, backgroundColor: "var(--color-safety-orange)", duration: 0.1 }, 11.6);
+
+        // Scene 4: Result
+        tl.to("#scene-admin", { opacity: 0, scale: 1.1, duration: 0.5 }, 12.5);
+        tl.set("#scene-customer", { display: "block", opacity: 0 }, 12.5);
+        tl.to("#scene-customer", { opacity: 1, duration: 0.5 }, 12.5);
+        tl.from(".cust-card", { y: 100, opacity: 0, duration: 0.7, ease: "power2.out" }, 13.0);
+        
+        tl.to("#dot-4", { backgroundColor: "var(--color-safety-orange)", duration: 0.4 }, 14.0);
+        tl.to("#dot-5", { backgroundColor: "var(--color-safety-orange)", duration: 0.4 }, 14.5);
+        tl.to("#final-st", { opacity: 0, y: -20, duration: 0.3 }, 15.2);
+        tl.set("#pill-del", { display: "inline-block", opacity: 0, scale: 0.5 }, 15.2);
+        tl.to("#pill-del", { opacity: 1, scale: 1, duration: 0.5, ease: "back.out" }, 15.2);
+
+        function resize() {
+            const wrap = document.querySelector('.preview-wrapper');
+            const comp = document.querySelector('[data-composition-id]');
+            const scale = wrap.clientHeight / 1920;
+            comp.style.transform = `translateX(-50%) scale(${scale})`;
+        }
+        window.onresize = resize; resize();
+        window.__timelines = { "track-app-promo": tl };
+        setTimeout(() => tl.play(), 1000);
+    </script>
+</body>
+</html>
