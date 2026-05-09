@@ -18,6 +18,13 @@
 - **Typography:** Space Grotesk (Boldest weight).
 - **Layout:** Global URL `www.track-app.io` always visible at the bottom (but smaller than the main text).
 
+## 🎙️ Voiceover (VO) Script
+
+- **0.0 - 3.0s:** "Устали от холдов PayPal? Деньги заморожены на 21 день из-за плохого трекинга?"
+- **3.0 - 6.5s:** "Есть секрет. Track-App создает легитимное движение ваших посылок в реальном времени."
+- **6.5 - 11.5s:** "Мы симулируем логистику по всему миру. Платежки видят активность — вы получаете свои выплаты мгновенно."
+- **11.5 - 15.0s:** "Track-App. Твой легальный чит-код для дропшиппинга. Начни бесплатно."
+
 ## 🛠️ Implementation Requirements (Hyperframes)
 - Use `window.__timelines` for GSAP control.
 - Text layers must be responsive and centered.

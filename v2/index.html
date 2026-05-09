@@ -60,6 +60,31 @@
 
       /* Audio Cues Visualizer (Hidden) */
       .audio-cue { display: none; }
+      .global-subtitles {
+        position: absolute;
+        bottom: 15%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        z-index: 1000;
+        pointer-events: none;
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 900;
+        text-transform: uppercase;
+        color: #FFD700; /* Viral Yellow */
+        text-shadow: 0 4px 0 #000, 4px 4px 0 #000, -2px -2px 0 #000;
+        font-size: 110px;
+        line-height: 1.1;
+        padding: 0 40px;
+      }
+      .subtitle-word {
+        display: inline-block;
+        margin: 0 15px; /* Fix word bunching */
+        opacity: 0;
+        transform: scale(0);
+      }
+      /* tiktok-text is replaced by global-subtitles */
+      .tiktok-text { display: none; }
     </style>
   </head>
   <body>
@@ -71,6 +96,8 @@
       data-width="1080"
       data-height="1920"
     >
+      <div class="global-subtitles" id="subtitles"></div>
+
       <!-- GLOBAL FOOTER (Visible on all scenes) -->
       <div class="absolute bottom-12 w-full z-[100] flex flex-col items-center pointer-events-none">
         <div class="bg-black/50 backdrop-blur-md px-12 py-4 rounded-full border border-white/20 text-white text-5xl font-bold font-mono shadow-2xl" id="global-url">
@@ -83,10 +110,10 @@
         <div class="absolute inset-0 opacity-30" style="background-image: repeating-linear-gradient(45deg, #000, #000 10px, transparent 10px, transparent 20px);"></div>
         
         <div class="tiktok-text top-[10%] scale-150" id="s1-text">
-          MONEY<br>HOLDS?
+          PAYPAL HOLDS?<br>FUNDS FROZEN?
         </div>
 
-        <div class="absolute inset-0 flex items-center justify-center p-10">
+        <div class="absolute inset-0 flex items-center justify-center p-10 -translate-y-40">
           <div class="w-full bg-white rounded-[60px] p-16 border-[12px] border-red-600 shadow-[0_0_150px_rgba(220,38,38,0.6)]" id="paypal-alert">
             <div class="flex justify-between items-center mb-10">
               <span class="text-paypal-blue font-black italic text-8xl">PayPal</span>
@@ -105,11 +132,11 @@
 
       <!-- SCENE 2: THE SECRET (3.0 - 6.5s) -->
       <div class="clip z-20 bg-slate-100" id="s2" data-start="3.0" data-duration="3.5">
-        <div class="tiktok-text top-[10%] text-slate-900 text-[140px]" id="s2-text">
-          FIX IT.
+        <div class="tiktok-text top-[10%] text-slate-900 text-[100px]" id="s2-text">
+          THE SECRET?<br>TRACK-APP.
         </div>
 
-        <div class="absolute inset-0 flex items-center justify-center p-10 pt-40" id="s2-ui-container">
+        <div class="absolute inset-0 flex items-center justify-center p-10 -translate-y-40" id="s2-ui-container">
           <div class="glass-ui w-full p-16" id="admin-card">
             <div class="flex items-center gap-8 mb-16">
               <div class="w-32 h-32 bg-safety-orange rounded-[40px] flex items-center justify-center shadow-2xl">
@@ -148,11 +175,11 @@
         <div id="map" class="absolute inset-0 z-0 opacity-0"></div>
         <div class="map-dim"></div>
 
-        <div class="tiktok-text top-[10%] text-slate-900 text-[90px]" id="s3-text">
-          KEEP YOUR<br><span class="highlight-orange text-white">FUNDS.</span>
+        <div class="tiktok-text top-[10%] text-slate-900 text-[100px] leading-tight" id="s3-text">
+          SIMULATE LOGISTICS.<br>GET PAID NOW.
         </div>
 
-        <div class="absolute bottom-40 w-full px-10">
+        <div class="absolute top-40 w-full px-10">
           <div class="glass-ui w-full p-16" id="status-card">
             <div class="flex justify-between items-center mb-12">
               <div>
@@ -184,21 +211,10 @@
       <div class="clip z-40 bg-slate-900" id="s4" data-start="11.0" data-duration="4.0">
         <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#fff 2px, transparent 2px); background-size: 60px 60px;"></div>
         
-        <div class="absolute top-20 w-full text-center z-50">
-          <div id="final-cta" class="text-safety-orange text-[140px] font-black italic uppercase drop-shadow-[0_0_50px_rgba(249,115,22,0.8)]">
-            START FREE.
+        <div class="flex flex-col items-center justify-start h-full text-center px-10 pt-60">
+          <div id="final-logo" class="w-64 h-64 bg-safety-orange rounded-[60px] mb-20 flex items-center justify-center shadow-[0_0_150px_rgba(249,115,22,0.6)]">
+            <svg class="w-40 h-40 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4"><path d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
           </div>
-        </div>
-
-        <div class="flex flex-col items-center justify-center h-full text-center px-10 pt-40 pb-40">
-          <div id="final-logo" class="w-48 h-48 bg-safety-orange rounded-[50px] mb-12 flex items-center justify-center shadow-[0_0_100px_rgba(249,115,22,0.4)]">
-            <svg class="w-32 h-32 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4"><path d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-          </div>
-          
-          <h1 id="final-title" class="text-white text-[160px] font-black font-heading leading-none mb-4">Track-App.</h1>
-          <p id="final-desc" class="text-electric-blue text-6xl font-bold uppercase tracking-widest leading-tight">
-            The Dropshipper's<br><span class="text-white underline decoration-safety-orange">Cheat Code.</span>
-          </p>
         </div>
 
         <!-- Audio Cue: Cha-ching -->
@@ -213,6 +229,59 @@
       const mainTl = gsap.timeline({ paused: true });
 
       // --- Map Engine ---
+      //## 🎙️ Voiceover (VO) Script (English)
+      //- **0.0 - 3.0s:** "PayPal holds? Funds frozen?"
+      //- **3.0 - 6.5s:** "The secret? Track-App generates movement."
+      //- **6.5 - 11.0s:** "Simulate logistics. Get paid now."
+      //- **11.0 - 15.0s:** "Track-App. Your cheat code. Start free."
+
+      const speak = (text) => {
+        const msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.lang = 'en-US';
+        msg.rate = 1.2;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(msg);
+      };
+
+      const animateSubtitles = (text, duration, startTime) => {
+        const container = document.getElementById('subtitles');
+        const sceneGroup = document.createElement('div');
+        sceneGroup.style.display = 'none';
+        container.appendChild(sceneGroup);
+
+        // Show group at start of scene
+        mainTl.set(sceneGroup, { display: 'block' }, startTime);
+
+        const words = text.split(' ');
+        words.forEach((word, i) => {
+          const span = document.createElement('span');
+          span.innerText = word; // No space inside span
+          span.className = 'subtitle-word';
+          sceneGroup.appendChild(span);
+          
+          const wordDelay = (duration / words.length) * i;
+          
+          // The "Pop" Animation
+          mainTl.to(span, { 
+            opacity: 1, 
+            scale: 1.4, 
+            color: '#fff', // Flash white on pop
+            duration: 0.1, 
+            ease: 'back.out(2)' 
+          }, startTime + wordDelay);
+          
+          mainTl.to(span, { 
+            scale: 1, 
+            color: '#FFD700', // Return to yellow
+            duration: 0.15 
+          }, startTime + wordDelay + 0.1);
+        });
+
+        // Hide group at end of scene
+        mainTl.set(sceneGroup, { display: 'none' }, startTime + duration);
+      };
+
       let map, marker, route;
       function initMap() {
         if (map) return;
@@ -230,13 +299,25 @@
       // --- Animation Orchestration ---
 
       // SCENE 1: PAIN (0.0 - 3.0)
-      mainTl.call(() => { document.querySelectorAll('.clip').forEach(c => c.classList.remove('active')); document.getElementById('s1').classList.add('active'); }, null, 0);
+      mainTl.call(() => { 
+        document.querySelectorAll('.clip').forEach(c => c.classList.remove('active')); 
+        document.getElementById('s1').classList.add('active'); 
+        speak("PayPal holds? Funds frozen?");
+      }, null, 0);
+      animateSubtitles("PAYPAL HOLDS? FUNDS FROZEN?", 3.0, 0);
+      
       mainTl.from('#s1-text', { scale: 2, opacity: 0, duration: 0.5, ease: 'expo.out' }, 0.2);
       mainTl.from('#paypal-alert', { y: 1000, rotation: 10, duration: 0.6, ease: 'back.out(1.2)' }, 1.0);
       mainTl.to('#s1-text', { scale: 0.9, duration: 2.0, ease: 'none' }, 1.0);
 
       // SCENE 2: SECRET (3.0 - 6.5)
-      mainTl.call(() => { document.querySelectorAll('.clip').forEach(c => c.classList.remove('active')); document.getElementById('s2').classList.add('active'); }, null, 3.0);
+      mainTl.call(() => { 
+        document.querySelectorAll('.clip').forEach(c => c.classList.remove('active')); 
+        document.getElementById('s2').classList.add('active'); 
+        speak("The secret? Track-App generates movement.");
+      }, null, 3.0);
+      animateSubtitles("THE SECRET? TRACK-APP GENERATES MOVEMENT.", 3.5, 3.0);
+      
       mainTl.from('#s2-text', { scale: 0, opacity: 0, duration: 0.6, ease: 'back.out(1.7)' }, 3.2);
       mainTl.from('#admin-card', { y: 1500, duration: 0.8, ease: 'power3.out' }, 3.5);
       
@@ -245,7 +326,7 @@
       mainTl.to('#btn-generate', { scale: 1, duration: 0.2, backgroundColor: '#3B82F6', text: 'GENERATING...' }, 5.1);
       mainTl.to('#s2-text', { text: 'GENERATE MOVEMENT.', scale: 0.7, y: -50, duration: 0.3 }, 5.1);
 
-      // --- TRANSITION: SPEED RAMP (6.5 - 7.0) ---
+      // --- TRANSITION: SPEED RAMP ---
       mainTl.to('#s2-ui-container', { scale: 8, opacity: 0, duration: 0.5, ease: 'power4.in' }, 6.0);
       mainTl.to('#s2-text', { opacity: 0, scale: 0.5, duration: 0.3 }, 6.0);
 
@@ -254,22 +335,24 @@
         document.querySelectorAll('.clip').forEach(c => c.classList.remove('active')); 
         document.getElementById('s3').classList.add('active');
         initMap();
+        speak("Simulate logistics. Get paid now.");
       }, null, 6.5);
+      animateSubtitles("SIMULATE LOGISTICS. GET PAID NOW.", 4.5, 6.5);
       
       mainTl.to('#map', { opacity: 1, duration: 0.5 }, 7.0);
       mainTl.from('#s3-text', { scale: 0, opacity: 0, duration: 0.6, ease: 'back.out' }, 7.2);
       mainTl.from('#status-card', { y: 500, duration: 0.6, ease: 'power3.out' }, 7.5);
 
       // Progress & Map Sync
-      mainTl.to('#progress-bar', { width: '100%', duration: 3.0, ease: 'none' }, 7.5);
+      mainTl.to('#progress-bar', { width: '100%', duration: 3.5, ease: 'none' }, 7.5);
       mainTl.to('#live-status', { text: 'OUT FOR DELIVERY', duration: 0.1 }, 9.5);
       mainTl.to('#kept-funds-callout', { color: '#F97316', scale: 1.2, duration: 0.3, yoyo: true, repeat: 1 }, 9.5);
 
       mainTl.to({}, { 
-        duration: 3.0, 
+        duration: 3.5, 
         onUpdate: function() {
           if(!marker) return;
-          const p = (this.time() - 7.5) / 3.0;
+          const p = (this.time() - 7.5) / 3.5;
           if (p < 0 || p > 1) return;
           const start = [22.5431, 114.0579], end = [51.5074, -0.1278];
           const lat = start[0] + (end[0] - start[0]) * p;
@@ -281,8 +364,13 @@
       }, 7.5);
 
       // SCENE 4: FINALE (11.0 - 15.0)
-      mainTl.call(() => { document.querySelectorAll('.clip').forEach(c => c.classList.remove('active')); document.getElementById('s4').classList.add('active'); }, null, 11.0);
-      mainTl.from('#final-cta', { y: -200, opacity: 0, duration: 0.6, ease: 'back.out(1.5)' }, 11.2);
+      mainTl.call(() => { 
+        document.querySelectorAll('.clip').forEach(c => c.classList.remove('active')); 
+        document.getElementById('s4').classList.add('active'); 
+        speak("Track-App. Your cheat code. Start free.");
+      }, null, 11.0);
+      animateSubtitles("TRACK-APP. YOUR CHEAT CODE. START FREE.", 4.0, 11.0);
+      
       mainTl.from('#final-logo', { scale: 0, rotation: 180, duration: 0.8, ease: 'back.out' }, 11.5);
       mainTl.from('#final-title', { opacity: 0, y: 50, duration: 0.5 }, 11.8);
       mainTl.from('#final-desc', { opacity: 0, y: 50, duration: 0.5 }, 12.1);
