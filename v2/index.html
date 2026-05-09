@@ -85,6 +85,79 @@
       }
       /* tiktok-text is replaced by global-subtitles */
       .tiktok-text { display: none; }
+
+      /* iPhone Mockup - Realistic iPhone 15 Pro */
+      .iphone-frame {
+        width: 700px;
+        height: 1380px;
+        background: linear-gradient(160deg, #2a2a2a 0%, #1a1a1a 40%, #141414 60%, #222 100%);
+        border-radius: 90px;
+        padding: 18px;
+        box-shadow:
+          0 0 0 1.5px #3a3a3a,
+          0 0 0 3px #0d0d0d,
+          0 0 0 5px #2a2a2a,
+          0 40px 160px rgba(0,0,0,0.9),
+          0 0 120px rgba(249,115,22,0.12),
+          inset 0 1px 0 rgba(255,255,255,0.08);
+        position: relative;
+        flex-shrink: 0;
+      }
+      .iphone-screen {
+        width: 100%;
+        height: 100%;
+        background: #000;
+        border-radius: 74px;
+        overflow: hidden;
+        position: relative;
+      }
+      .dynamic-island {
+        position: absolute;
+        top: 16px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 156px;
+        height: 40px;
+        background: #000;
+        border-radius: 24px;
+        z-index: 20;
+      }
+      .iphone-btn-power {
+        position: absolute;
+        right: -6px;
+        top: 220px;
+        width: 5px;
+        height: 100px;
+        background: linear-gradient(to right, #1a1a1a, #2d2d2d);
+        border-radius: 0 3px 3px 0;
+      }
+      .iphone-btn-vol1 {
+        position: absolute;
+        left: -6px;
+        top: 160px;
+        width: 5px;
+        height: 60px;
+        background: linear-gradient(to left, #1a1a1a, #2d2d2d);
+        border-radius: 3px 0 0 3px;
+      }
+      .iphone-btn-vol2 {
+        position: absolute;
+        left: -6px;
+        top: 240px;
+        width: 5px;
+        height: 60px;
+        background: linear-gradient(to left, #1a1a1a, #2d2d2d);
+        border-radius: 3px 0 0 3px;
+      }
+      .iphone-btn-mute {
+        position: absolute;
+        left: -6px;
+        top: 120px;
+        width: 5px;
+        height: 36px;
+        background: linear-gradient(to left, #1a1a1a, #2d2d2d);
+        border-radius: 3px 0 0 3px;
+      }
     </style>
   </head>
   <body>
@@ -92,7 +165,7 @@
       id="root"
       data-composition-id="main"
       data-start="0"
-      data-duration="15"
+      data-duration="17.5"
       data-width="1080"
       data-height="1920"
     >
@@ -105,8 +178,108 @@
         </div>
       </div>
 
-      <!-- SCENE 1: THE PAIN (0.0 - 3.0s) -->
-      <div class="clip active z-10 bg-pain-red" id="s1" data-start="0" data-duration="3.0">
+      <!-- SCENE 0: iPHONE INTRO (0.0 - 2.5s) -->
+      <div class="clip active z-[5]" id="s0" data-start="0" data-duration="2.5" style="background: linear-gradient(180deg, #f5f5f7 0%, #e8e8ed 100%)">
+        <!-- Subtle orange accent glow -->\n        <div class="absolute" style="width:1080px;height:700px;top:-200px;left:0;background:radial-gradient(ellipse at 50% 0%, rgba(249,115,22,0.08) 0%, transparent 70%);"></div>
+
+        <div class="absolute inset-0 flex items-center justify-center" id="iphone-wrapper">
+          <div class="iphone-frame">
+            <div class="iphone-btn-power"></div>
+            <div class="iphone-btn-mute"></div>
+            <div class="iphone-btn-vol1"></div>
+            <div class="iphone-btn-vol2"></div>
+            <div class="iphone-screen">
+              <div class="dynamic-island"></div>
+
+              <!-- App content: full dark screen -->
+              <div style="background:linear-gradient(180deg,#111 0%,#000 100%);height:100%;padding-top:72px;display:flex;flex-direction:column;">
+
+                <!-- Status bar -->
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:0 32px 20px;color:white;font-size:26px;font-weight:700;">
+                  <span>9:41</span>
+                  <div style="display:flex;gap:10px;align-items:center;">
+                    <svg width="28" height="16" viewBox="0 0 24 16"><rect x="0" y="5" width="4" height="11" rx="1" fill="white" opacity="0.5"/><rect x="6" y="3" width="4" height="13" rx="1" fill="white" opacity="0.7"/><rect x="12" y="1" width="4" height="15" rx="1" fill="white" opacity="0.9"/><rect x="18" y="0" width="4" height="16" rx="1" fill="white"/></svg>
+                    <svg width="32" height="18" viewBox="0 0 32 18"><rect x="1" y="1" width="26" height="16" rx="4" stroke="white" stroke-width="1.5" fill="none"/><rect x="27" y="6" width="4" height="6" rx="2" fill="white" opacity="0.7"/><rect x="3" y="3" width="18" height="12" rx="2" fill="white"/></svg>
+                  </div>
+                </div>
+
+                <!-- App header -->
+                <div style="padding:0 32px 28px;display:flex;align-items:center;justify-content:space-between;">
+                  <div style="display:flex;align-items:center;gap:18px;">
+                    <div style="width:80px;height:80px;background:linear-gradient(135deg,#f97316,#ea580c);border-radius:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 30px rgba(249,115,22,0.5);">
+                      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <div>
+                      <div style="color:white;font-size:38px;font-weight:900;line-height:1;">Track-App</div>
+                      <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
+                        <div style="width:12px;height:12px;border-radius:50%;background:#22c55e;box-shadow:0 0 10px #22c55e;"></div>
+                        <span style="color:#22c55e;font-size:22px;font-weight:700;">LIVE TRACKING</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="background:rgba(255,255,255,0.1);border-radius:50%;width:60px;height:60px;display:flex;align-items:center;justify-content:center;">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                  </div>
+                </div>
+
+                <!-- Stats grid -->
+                <div style="padding:0 28px 24px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+                  <div style="background:rgba(249,115,22,0.15);border:1px solid rgba(249,115,22,0.3);border-radius:24px;padding:20px 16px;text-align:center;">
+                    <div style="color:#f97316;font-size:42px;font-weight:900;line-height:1;">47</div>
+                    <div style="color:rgba(255,255,255,0.5);font-size:18px;font-weight:700;text-transform:uppercase;margin-top:4px;">Active</div>
+                  </div>
+                  <div style="background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.25);border-radius:24px;padding:20px 16px;text-align:center;">
+                    <div style="color:#22c55e;font-size:42px;font-weight:900;line-height:1;">$12K</div>
+                    <div style="color:rgba(255,255,255,0.5);font-size:18px;font-weight:700;text-transform:uppercase;margin-top:4px;">Freed</div>
+                  </div>
+                  <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:24px;padding:20px 16px;text-align:center;">
+                    <div style="color:white;font-size:42px;font-weight:900;line-height:1;">98%</div>
+                    <div style="color:rgba(255,255,255,0.5);font-size:18px;font-weight:700;text-transform:uppercase;margin-top:4px;">Success</div>
+                  </div>
+                </div>
+
+                <!-- Divider label -->
+                <div style="padding:0 32px 16px;color:rgba(255,255,255,0.4);font-size:20px;font-weight:700;text-transform:uppercase;letter-spacing:3px;">Active Shipments</div>
+
+                <!-- Tracking card 1 -->
+                <div style="margin:0 24px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(249,115,22,0.35);border-radius:28px;padding:28px;">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                    <div>
+                      <div style="color:rgba(255,255,255,0.5);font-size:18px;font-weight:600;margin-bottom:4px;">TRK-9921-UK</div>
+                      <div style="color:white;font-size:28px;font-weight:900;">Shenzhen → London</div>
+                    </div>
+                    <div style="background:#f97316;color:white;font-size:18px;font-weight:800;padding:8px 18px;border-radius:50px;">IN TRANSIT</div>
+                  </div>
+                  <div style="background:rgba(255,255,255,0.1);border-radius:100px;height:10px;overflow:hidden;margin-bottom:12px;">
+                    <div style="background:linear-gradient(90deg,#f97316,#fbbf24);height:100%;width:72%;border-radius:100px;"></div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;color:rgba(255,255,255,0.4);font-size:18px;font-weight:600;">
+                    <span>Shenzhen, CN</span><span style="color:#f97316;">72% complete</span><span>London, UK</span>
+                  </div>
+                </div>
+
+                <!-- Tracking card 2 -->
+                <div style="margin:0 24px 16px;background:rgba(255,255,255,0.04);border:1px solid rgba(34,197,94,0.25);border-radius:28px;padding:28px;">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+                    <div>
+                      <div style="color:rgba(255,255,255,0.5);font-size:18px;font-weight:600;margin-bottom:4px;">TRK-8847-DE</div>
+                      <div style="color:white;font-size:28px;font-weight:900;">Shanghai → Berlin</div>
+                    </div>
+                    <div style="background:#16a34a;color:white;font-size:18px;font-weight:800;padding:8px 18px;border-radius:50px;">DELIVERED ✓</div>
+                  </div>
+                  <div style="background:rgba(255,255,255,0.1);border-radius:100px;height:10px;overflow:hidden;">
+                    <div style="background:linear-gradient(90deg,#22c55e,#4ade80);height:100%;width:100%;border-radius:100px;"></div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 1: THE PAIN (2.5 - 5.5s) -->
+      <div class="clip z-10 bg-pain-red" id="s1" data-start="2.5" data-duration="3.0">
         <div class="absolute inset-0 opacity-30" style="background-image: repeating-linear-gradient(45deg, #000, #000 10px, transparent 10px, transparent 20px);"></div>
         
         <div class="tiktok-text top-[10%] scale-150" id="s1-text">
@@ -130,8 +303,8 @@
         <div class="audio-cue" data-time="1.0" data-label="impact-alert"></div>
       </div>
 
-      <!-- SCENE 2: THE SECRET (3.0 - 6.5s) -->
-      <div class="clip z-20 bg-slate-100" id="s2" data-start="3.0" data-duration="3.5">
+      <!-- SCENE 2: THE SECRET (5.5 - 9.0s) -->
+      <div class="clip z-20 bg-slate-100" id="s2" data-start="5.5" data-duration="3.5">
         <div class="tiktok-text top-[10%] text-slate-900 text-[100px]" id="s2-text">
           THE SECRET?<br>TRACK-APP.
         </div>
@@ -170,8 +343,8 @@
         <div class="audio-cue" data-time="6.0" data-label="mechanical-click"></div>
       </div>
 
-      <!-- SCENE 3: THE MAGIC (6.5 - 11.0s) -->
-      <div class="clip z-30 bg-white" id="s3" data-start="6.5" data-duration="4.5">
+      <!-- SCENE 3: THE MAGIC (9.0 - 13.5s) -->
+      <div class="clip z-30 bg-white" id="s3" data-start="9.0" data-duration="4.5">
         <div id="map" class="absolute inset-0 z-0 opacity-0"></div>
         <div class="map-dim"></div>
 
@@ -207,8 +380,8 @@
         <div class="audio-cue" data-time="8.5" data-label="data-processing"></div>
       </div>
 
-      <!-- SCENE 4: FINALE (11.0 - 15.0s) -->
-      <div class="clip z-40 bg-slate-900" id="s4" data-start="11.0" data-duration="4.0">
+      <!-- SCENE 4: FINALE (13.5 - 17.5s) -->
+      <div class="clip z-40 bg-slate-900" id="s4" data-start="13.5" data-duration="4.0">
         <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#fff 2px, transparent 2px); background-size: 60px 60px;"></div>
         
         <div class="flex flex-col items-center justify-start h-full text-center px-10 pt-60">
@@ -298,61 +471,64 @@
 
       // --- Animation Orchestration ---
 
-      // SCENE 1: PAIN (0.0 - 3.0)
+      // SCENE 0: iPHONE INTRO (0.0 - 2.5)
+      mainTl.call(() => {
+        document.querySelectorAll('.clip').forEach(c => c.classList.remove('active'));
+        document.getElementById('s0').classList.add('active');
+      }, null, 0);
+      // iPhone drops in from above with slight bounce
+      mainTl.from('#iphone-wrapper', { y: -1200, scale: 0.6, opacity: 0, duration: 0.7, ease: 'back.out(1.4)' }, 0.1);
+      // Glow pulse on the screen
+      mainTl.to('#iphone-wrapper', { scale: 1.03, duration: 0.3, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 1.0);
+      // Zoom-explode transition into Scene 1
+      mainTl.to('#iphone-wrapper', { scale: 8, opacity: 0, duration: 0.5, ease: 'power4.in' }, 2.0);
+
+      // SCENE 1: PAIN (2.5 - 5.5)
       mainTl.call(() => { 
         document.querySelectorAll('.clip').forEach(c => c.classList.remove('active')); 
         document.getElementById('s1').classList.add('active'); 
         speak("PayPal holds? Funds frozen?");
-      }, null, 0);
-      animateSubtitles("PAYPAL HOLDS? FUNDS FROZEN?", 3.0, 0);
-      
-      mainTl.from('#s1-text', { scale: 2, opacity: 0, duration: 0.5, ease: 'expo.out' }, 0.2);
-      mainTl.from('#paypal-alert', { y: 1000, rotation: 10, duration: 0.6, ease: 'back.out(1.2)' }, 1.0);
-      mainTl.to('#s1-text', { scale: 0.9, duration: 2.0, ease: 'none' }, 1.0);
+      }, null, 2.5);
+      animateSubtitles("PAYPAL HOLDS? FUNDS FROZEN?", 3.0, 2.5);
+      mainTl.from('#paypal-alert', { y: 1000, rotation: 10, duration: 0.6, ease: 'back.out(1.2)' }, 3.0);
 
-      // SCENE 2: SECRET (3.0 - 6.5)
+      // SCENE 2: SECRET (5.5 - 9.0)
       mainTl.call(() => { 
         document.querySelectorAll('.clip').forEach(c => c.classList.remove('active')); 
         document.getElementById('s2').classList.add('active'); 
         speak("The secret? Track-App generates movement.");
-      }, null, 3.0);
-      animateSubtitles("THE SECRET? TRACK-APP GENERATES MOVEMENT.", 3.5, 3.0);
-      
-      mainTl.from('#s2-text', { scale: 0, opacity: 0, duration: 0.6, ease: 'back.out(1.7)' }, 3.2);
-      mainTl.from('#admin-card', { y: 1500, duration: 0.8, ease: 'power3.out' }, 3.5);
-      
+      }, null, 5.5);
+      animateSubtitles("THE SECRET? TRACK-APP GENERATES MOVEMENT.", 3.5, 5.5);
+      mainTl.from('#admin-card', { y: 1500, duration: 0.8, ease: 'power3.out' }, 5.8);
+
       // Sim-Click
-      mainTl.to('#btn-generate', { scale: 0.9, duration: 0.1 }, 5.0);
-      mainTl.to('#btn-generate', { scale: 1, duration: 0.2, backgroundColor: '#3B82F6', text: 'GENERATING...' }, 5.1);
-      mainTl.to('#s2-text', { text: 'GENERATE MOVEMENT.', scale: 0.7, y: -50, duration: 0.3 }, 5.1);
+      mainTl.to('#btn-generate', { scale: 0.9, duration: 0.1 }, 7.5);
+      mainTl.to('#btn-generate', { scale: 1, duration: 0.2, backgroundColor: '#3B82F6', text: 'GENERATING...' }, 7.6);
 
-      // --- TRANSITION: SPEED RAMP ---
-      mainTl.to('#s2-ui-container', { scale: 8, opacity: 0, duration: 0.5, ease: 'power4.in' }, 6.0);
-      mainTl.to('#s2-text', { opacity: 0, scale: 0.5, duration: 0.3 }, 6.0);
+      // TRANSITION: SPEED RAMP
+      mainTl.to('#s2-ui-container', { scale: 8, opacity: 0, duration: 0.5, ease: 'power4.in' }, 8.5);
 
-      // SCENE 3: MAGIC (6.5 - 11.0)
+      // SCENE 3: MAGIC (9.0 - 13.5)
       mainTl.call(() => { 
         document.querySelectorAll('.clip').forEach(c => c.classList.remove('active')); 
         document.getElementById('s3').classList.add('active');
         initMap();
         speak("Simulate logistics. Get paid now.");
-      }, null, 6.5);
-      animateSubtitles("SIMULATE LOGISTICS. GET PAID NOW.", 4.5, 6.5);
-      
-      mainTl.to('#map', { opacity: 1, duration: 0.5 }, 7.0);
-      mainTl.from('#s3-text', { scale: 0, opacity: 0, duration: 0.6, ease: 'back.out' }, 7.2);
-      mainTl.from('#status-card', { y: 500, duration: 0.6, ease: 'power3.out' }, 7.5);
+      }, null, 9.0);
+      animateSubtitles("SIMULATE LOGISTICS. GET PAID NOW.", 4.5, 9.0);
+      mainTl.to('#map', { opacity: 1, duration: 0.5 }, 9.5);
+      mainTl.from('#status-card', { y: -500, duration: 0.6, ease: 'power3.out' }, 9.8);
 
       // Progress & Map Sync
-      mainTl.to('#progress-bar', { width: '100%', duration: 3.5, ease: 'none' }, 7.5);
-      mainTl.to('#live-status', { text: 'OUT FOR DELIVERY', duration: 0.1 }, 9.5);
-      mainTl.to('#kept-funds-callout', { color: '#F97316', scale: 1.2, duration: 0.3, yoyo: true, repeat: 1 }, 9.5);
+      mainTl.to('#progress-bar', { width: '100%', duration: 3.5, ease: 'none' }, 10.0);
+      mainTl.to('#live-status', { text: 'OUT FOR DELIVERY', duration: 0.1 }, 12.0);
+      mainTl.to('#kept-funds-callout', { color: '#F97316', scale: 1.2, duration: 0.3, yoyo: true, repeat: 1 }, 12.0);
 
       mainTl.to({}, { 
         duration: 3.5, 
         onUpdate: function() {
           if(!marker) return;
-          const p = (this.time() - 7.5) / 3.5;
+          const p = (this.time() - 10.0) / 3.5;
           if (p < 0 || p > 1) return;
           const start = [22.5431, 114.0579], end = [51.5074, -0.1278];
           const lat = start[0] + (end[0] - start[0]) * p;
@@ -361,19 +537,16 @@
           route.setLatLngs([start, [lat, lng]]);
           map.panTo([lat, lng], { animate: false });
         }
-      }, 7.5);
+      }, 10.0);
 
-      // SCENE 4: FINALE (11.0 - 15.0)
+      // SCENE 4: FINALE (13.5 - 17.5)
       mainTl.call(() => { 
         document.querySelectorAll('.clip').forEach(c => c.classList.remove('active')); 
         document.getElementById('s4').classList.add('active'); 
         speak("Track-App. Your cheat code. Start free.");
-      }, null, 11.0);
-      animateSubtitles("TRACK-APP. YOUR CHEAT CODE. START FREE.", 4.0, 11.0);
-      
-      mainTl.from('#final-logo', { scale: 0, rotation: 180, duration: 0.8, ease: 'back.out' }, 11.5);
-      mainTl.from('#final-title', { opacity: 0, y: 50, duration: 0.5 }, 11.8);
-      mainTl.from('#final-desc', { opacity: 0, y: 50, duration: 0.5 }, 12.1);
+      }, null, 13.5);
+      animateSubtitles("TRACK-APP. YOUR CHEAT CODE. START FREE.", 4.0, 13.5);
+      mainTl.from('#final-logo', { scale: 0, rotation: 180, duration: 0.8, ease: 'back.out' }, 14.0);
 
       window.__timelines["main"] = mainTl;
     </script>
