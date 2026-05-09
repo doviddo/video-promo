@@ -303,7 +303,10 @@
           PAYPAL HOLDS?<br>FUNDS FROZEN?
         </div>
 
-        <div class="absolute inset-0 flex items-center justify-center p-10 -translate-y-40">
+        <!-- Notification Rain Container (Moved behind) -->
+        <div id="notif-rain-container" class="absolute inset-0 pointer-events-none z-0"></div>
+
+        <div class="absolute inset-0 flex items-center justify-center p-10 -translate-y-40 z-10">
           <div class="w-full bg-white rounded-[60px] p-16 border-[12px] border-red-600 shadow-[0_0_150px_rgba(220,38,38,0.6)]" id="paypal-alert">
             <div class="flex justify-between items-center mb-10">
               <span class="text-paypal-blue font-black italic text-8xl">PayPal</span>
@@ -314,9 +317,6 @@
             <div class="text-red-600 text-[130px] font-black leading-none">-$4,500.00</div>
           </div>
         </div>
-
-        <!-- Notification Rain Container -->
-        <div id="notif-rain-container" class="absolute inset-0 pointer-events-none"></div>
 
         <!-- Audio Cue: Riser + Impact -->
         <div class="audio-cue" data-time="0.0" data-label="riser"></div>
@@ -443,23 +443,29 @@
           const span = document.createElement('span');
           span.innerText = word;
           span.className = 'subtitle-word';
+          // Snappy initial state
+          gsap.set(span, { scale: 0.5, opacity: 0, rotation: Math.random() * 10 - 5 });
           sceneGroup.appendChild(span);
           
+          // Much tighter delay for "rapid fire" feel
           const wordDelay = (duration / words.length) * i;
           
+          // Snappy Pop (0.1s)
           mainTl.to(span, { 
             opacity: 1, 
-            scale: 1.4, 
-            color: '#fff', 
+            scale: 1.2, 
+            rotation: 0,
+            color: '#ffffff',
             duration: 0.1, 
             ease: 'back.out(2)' 
           }, startTime + wordDelay);
           
           mainTl.to(span, { 
             scale: 1, 
-            color: '#FFD700', 
-            duration: 0.15 
-          }, startTime + wordDelay + 0.1);
+            color: '#FFD700',
+            duration: 0.1,
+            ease: 'power2.out'
+          }, startTime + wordDelay + 0.08);
         });
 
         mainTl.set(sceneGroup, { display: 'none' }, startTime + duration);
@@ -467,18 +473,20 @@
 
       function createNotificationRain() {
         const container = document.getElementById('notif-rain-container');
+        container.innerHTML = ''; // Clear previous
         const types = [
           { label: 'STRIPE', text: 'Account Restricted', color: 'text-blue-600', icon: 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z' },
           { label: 'CHARGEBACK', text: '-$1,200.00 Dispute', color: 'text-red-600', icon: 'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
           { label: 'SUPPORT', text: '"Where is my order???"', color: 'text-slate-600', icon: 'M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z' }
         ];
 
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < 15; i++) {
           const type = types[i % types.length];
           const div = document.createElement('div');
           div.className = 'notif-rain';
+          div.style.opacity = '0.7'; // Subtle background feel
           div.innerHTML = `
-            <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center">
+            <div class="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center">
               <svg class="w-10 h-10 ${type.color}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="${type.icon}" /></svg>
             </div>
             <div>
@@ -487,19 +495,20 @@
             </div>
           `;
           
-          const x = 50 + Math.random() * 400;
-          const y = 200 + Math.random() * 1200;
-          const rot = -15 + Math.random() * 30;
+          // Wider spread to avoid covering the center
+          const x = (i % 2 === 0) ? Math.random() * 200 : 600 + Math.random() * 200; 
+          const y = 100 + Math.random() * 1600;
+          const rot = -20 + Math.random() * 40;
           
           container.appendChild(div);
           
           mainTl.fromTo(div, 
-            { x: x, y: y + 200, opacity: 0, scale: 0.5, rotation: rot },
-            { x: x, y: y, opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(1.5)' }, 
-            1.5 + (i * 0.15)
+            { x: x, y: y + 300, opacity: 0, scale: 0.4, rotation: rot },
+            { x: x, y: y, opacity: 0.7, scale: 1, duration: 0.4, ease: 'back.out(1.2)' }, 
+            1.5 + (i * 0.12)
           );
           
-          mainTl.to(div, { opacity: 0, scale: 0.8, y: y - 100, duration: 0.3 }, 4.2);
+          mainTl.to(div, { opacity: 0, scale: 0.8, y: y - 150, duration: 0.3 }, 4.3);
         }
       }
 
